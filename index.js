@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const fs = require('fs');
 const app = express();
+const path = require('path');
 const fileUpload = require('express-fileupload');
 const port = process.env.PORT || 5002;
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,8 +29,12 @@ const users = [
     }
 ];
 app.engine('hbs', exphbs.engine({
-    extname: '.hbs'
+    extname: '.hbs',
+    defaultLayout: 'main',
+    layoutsDir: path.join(__dirname, 'views', 'layouts')
 }));
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.set('view engine', 'hbs');
 const generateAuthToken = () => {
@@ -167,7 +172,7 @@ app.post('/upload', requireAuth, (req, res) => {
         if (err) {
             return res.status(500).send(err);
         }
-        res.send('File uploaded successfully.');
+        // res.send('File uploaded successfully.');
         res.redirect('/');
     });
 });
