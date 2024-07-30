@@ -1,0 +1,29 @@
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<div class="row justify-content-md-center" style="margin-top: 100px">
+    <div class="col-md-6">
+
+        {{#if message}}
+            <div class="alert {{messageClass}}" role="alert">
+                {{message}}
+            </div>
+        {{/if}}
+
+        <form>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password for {{file}}</label>
+                <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <button class="btn btn-primary" id="continue">Continue</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('continue').addEventListener('click', function() {
+        var password = document.getElementById('exampleInputPassword1').value;
+        //redirect to /file/file?password=password
+        window.location.href = '/file/{{file}}?password=' + password;
+    });
+</script>

@@ -1,0 +1,84 @@
+@font-face {
+    font-family: "Supply";
+    src: url(/assets/fonts/PPSupplySans-Regular.otf);
+}
+@font-face {
+    font-family: "Supply Ultralight";
+    src: url(/assets/fonts/PPSupplySans-Ultralight.otf);
+}
+
+:root{
+    --bg1: #2300be;
+    --bg1trans: #2f00ff3a;
+    /* --bg3: #957dff; */
+    --bg3: #13005f;
+    --bg4: #d6d6d6;
+    --text: #fff;
+    --bg2: #1d1d29;
+    --text2: #000;
+    --accent: #150074;
+    --shadow: var(--bg1trans) 0px 2px 8px 0px;;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Supply", sans-serif;
+    font-size:2rem;
+    background: var(--bg2);
+    color: var(--text);
+}
+
+nav{
+    display:flex;
+    padding-top:1rem;
+    padding-bottom:1rem;
+    background: var(--bg1);
+}
+nav .horizontal{
+    display:flex;
+    justify-content:space-between;
+    width:100%;
+    padding-left:1rem;
+    padding-right:1rem;
+}
+nav .horizontal .link{
+    color:var(--text);
+    text-decoration:none;
+    font-size:1.5rem;
+    font-weight:600;
+    text-align: center;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    padding:10px;
+    border-radius:5px;
+}
+
+.link:hover{
+    background: var(--accent);
+    color: var(--text);
+    transition: 0.3s;
+}
+
+.links{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.file{
+    display:flex;
+    justify-content:space-between;
+    padding:1rem;
+    background: var(--bg3);
+    border-radius:5px;
+    margin:1rem;
+    box-shadow: var(--shadow);
+}
+.file .file-icon img{
+    width: 100px;
+    height: 100px;
+    margin-right:1rem;
+    filter: invert(1);
+
+}

@@ -1,0 +1,19 @@
+<div class="c">
+        {{#each files}}
+            <div class="file" onclick="download_file('{{this.to_download}}')">
+                <div class="file-icon">
+                    <img src="https://img.icons8.com/ios/452/file.png" alt="file">
+                </div>
+                <div class="file-name">
+                    <span>{{this.name}}</span>
+                </div>
+            </div>
+
+
+
+
+        {{/each}}
+    </div>
+
+    <script src="main.js"></script>
+</div>
