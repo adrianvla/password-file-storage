@@ -14,7 +14,7 @@ let authTokens = {};
 app.use(express.json());
 let FILES = {};
 
-fs.readFile(__dirname+'/files.json', 'utf8', (err, data) => {
+fs.readFile(process.cwd()+'/files.json', 'utf8', (err, data) => {
     if (err) {
         console.error(err);
         return;
@@ -50,7 +50,7 @@ app.get('/admin', (req, res) => {
         res.redirect('/');
         return;
     }
-    res.render(__dirname+'/views/'+'layouts/login.hbs');
+    res.render(process.cwd()+'/views/'+'layouts/login.hbs');
 });
 
 app.post('/admin', function (req, res) {
@@ -73,7 +73,7 @@ app.post('/admin', function (req, res) {
         // Redirect user to the protected page
         res.redirect('/');
     } else {
-        res.render(__dirname+'/views/'+'layouts/login.hbs', {
+        res.render(process.cwd()+'/views/'+'layouts/login.hbs', {
             message: 'Invalid username or password',
             messageClass: 'alert-danger'
         });
@@ -104,7 +104,7 @@ const requireAuth = (req, res, next) => {
         //check if user is in auth tokens
         //check if user is in auth tokens
         if(!users.find(u => u.username == req.user.username)){
-            res.render(__dirname+'/views/'+'layouts/login.hbs', {
+            res.render(process.cwd()+'/views/'+'layouts/login.hbs', {
                 message: 'Please login to continue',
                 messageClass: 'alert-danger'
             });
@@ -113,14 +113,14 @@ const requireAuth = (req, res, next) => {
 
         next();
     } else {
-        res.render(__dirname+'/views/'+'layouts/login.hbs', {
+        res.render(process.cwd()+'/views/'+'layouts/login.hbs', {
             message: 'Please login to continue',
             messageClass: 'alert-danger'
         });
     }
 };
 app.get('/',(req, res) => {
-    // let files = fs.readdirSync(__dirname+'/storage');
+    // let files = fs.readdirSync(process.cwd()+'/storage');
     let files = {};
     // console.log(files);
     //for each in files, delete password and required
@@ -133,7 +133,7 @@ app.get('/',(req, res) => {
         toSend.user = true;
     }
     // console.log(toSend);
-    res.render(__dirname+'/views/'+'layouts/home.hbs',toSend);
+    res.render(process.cwd()+'/views/'+'layouts/home.hbs',toSend);
 });
 app.post('/upload', requireAuth, (req, res) => {
     if (!req.files || !req.files.files) {
@@ -155,7 +155,7 @@ app.post('/upload', requireAuth, (req, res) => {
     };
 
     // Save FILES to a JSON file
-    fs.writeFile(__dirname + '/files.json', JSON.stringify(FILES), (err) => {
+    fs.writeFile(process.cwd() + '/files.json', JSON.stringify(FILES), (err) => {
         if (err) {
             console.error(err);
             return res.status(500).send('Error saving file information.');
@@ -163,7 +163,7 @@ app.post('/upload', requireAuth, (req, res) => {
     });
 
     // Move the uploaded file to the storage directory
-    file.mv(__dirname + '/storage/' + fileName, function(err) {
+    file.mv(process.cwd() + '/storage/' + fileName, function(err) {
         if (err) {
             return res.status(500).send(err);
         }
@@ -172,10 +172,10 @@ app.post('/upload', requireAuth, (req, res) => {
     });
 });
 app.get('/upload', requireAuth, (req, res) => {
-    res.render(__dirname+'/views/'+'layouts/upload.hbs');
+    res.render(process.cwd()+'/views/'+'layouts/upload.hbs');
 });
 app.get('/file/*', function (req, res) {
-    // const filePath = __dirname + req.url;
+    // const filePath = process.cwd() + req.url;
     let fileName = req.url.split("/").pop();
     //remove everything after ?
     fileName = fileName.split("?")[0];
@@ -191,7 +191,7 @@ app.get('/file/*', function (req, res) {
     //if password is correct
     if(FILES[fileName].required){
         if(req.query.password != password){
-            res.render(__dirname+'/views/'+'layouts/pass.hbs',{file:filepath,
+            res.render(process.cwd()+'/views/'+'layouts/pass.hbs',{file:filepath,
                 message: 'You have entered an incorrect password, or you just haven\'t entered any password at all',
                 messageClass: 'alert-danger'
             });
@@ -203,8 +203,8 @@ app.get('/file/*', function (req, res) {
     if(FILES[fileName]){
         res = res.status(200);
         // res.setHeader('Content-Type', 'application/pdf');
-        // res.send(fs.readFileSync(__dirname+'/storage/'+fileName));
-        res.download(__dirname+'/storage/'+filepath,filepath);
+        // res.send(fs.readFileSync(process.cwd()+'/storage/'+fileName));
+        res.download(process.cwd()+'/storage/'+filepath,filepath);
     }   
     else{
         res.status(404).send('File not found');
@@ -213,16 +213,16 @@ app.get('/file/*', function (req, res) {
 
 // app.get('/pass/*', function (req, res) {
 //     const fileName = req.url.split("/").pop();
-//     res.render(__dirname+'/views/'+'layouts/pass.hbs',{file:fileName});
+//     res.render(process.cwd()+'/views/'+'layouts/pass.hbs',{file:fileName});
 // });
 
 
 
 app.get('/style.css', function (req, res) {
-    res.sendFile(__dirname + "/views/css/style.css");
+    res.sendFile(process.cwd() + "/views/css/style.css");
 });
 app.get('/main.js', function (req, res) {
-    res.sendFile(__dirname + "/views/scripts/main.js");
+    res.sendFile(process.cwd() + "/views/scripts/main.js");
 });
 
 app.listen(port,"0.0.0.0", () => {
