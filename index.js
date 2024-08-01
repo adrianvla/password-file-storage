@@ -25,7 +25,7 @@ fs.readFile(process.cwd()+'/files.json', 'utf8', (err, data) => {
 const users = [
     {
         username: 'admin',
-        password: 'wjvLrQF2y7DVeJywm+4lKSIS4ShNEqrWRFe3qWH1McI='
+        password: 'SUPERSECRETPASSWORDHASH'
     }
 ];
 app.engine('hbs', exphbs.engine({
